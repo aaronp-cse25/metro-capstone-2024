@@ -1,0 +1,23 @@
+Places API
+Decisions Made:
+
+Old vs. New Places API
+Decision: Use the new Places API from Google.
+
+Pros: The new API provides access to over 100 million additional locations compared to the old API. It also offers better ways to refine searches by specific areas, such as rectangles, which aligns with the project requirements.
+Cons: Most of the code had to be rewritten because of differences in how the new API handles queries and returns results.
+TextSearch vs. Nearby Search
+Decision: Use TextSearch.
+
+Pros: TextSearch allows for more targeted queries, which is essential for filtering specific types of locations, such as tobacco shops or convenience stores. It is also more applicable to this project's goals of searching across a large geographic area.
+Cons: TextSearch can only be run once per keyword and per grid, making it more costly and time-consuming compared to other search methods.
+LocationBias vs. LocationRestriction
+Decision: Use LocationRestriction.
+
+Pros: LocationRestriction limits the search results to within specific geographic coordinates, ensuring that only locations within the defined area (e.g., Louisville Metro) are included. This precise control is vital for reducing irrelevant results.
+Cons: The search may still return some locations outside the targeted area, necessitating additional manual filtering.
+Keywords for Types
+Decision: Use keywords like tobacco, gas station, convenience store, and liquor store for the search query, while keeping it configurable.
+
+Pros: These keywords are configurable via a YAML file, allowing the client to update them easily based on changing project requirements.
+Cons: Expanding the number of keywords increases the cost and time for each query, as more searches would be needed to capture all relevant places.

@@ -1,0 +1,7 @@
+Introduction
+
+The project involves manipulating and processing location data using Google’s Places API, focusing on identifying businesses relevant to tobacco and related products in Louisville Metro. The primary goals of the code are to interact with a database stored in a CSV file, convert this data into a 2D-like structure for memory storage and manipulation, and perform API calls to gather additional information, such as place details and reviews.
+
+The Places API plays a crucial role in querying and identifying relevant locations, such as convenience stores, gas stations, and tobacco shops. These locations are filtered based on certain criteria and further analyzed by extracting their details, reviews, and addresses. The project also involves matching addresses from different datasets using string comparison techniques.
+
+In essence, the project aims to streamline the data handling process, enhance data accuracy, and provide meaningful insights by matching and categorizing locations based on their reviews and addresses. The integration of tools like Pandas, Pickle, and IO libraries ensures that the data is handled efficiently, while the Places API allows for real-time and precise location-based queries.

@@ -1,0 +1,9 @@
+Reviews/ Place Details 
+
+The code processes a list of places and their Place IDs to retrieve reviews from the Google Places API. The primary goal is to filter these reviews based on specific keywords (e.g., "tobacco," "vape," "cigarette") and categorize places into two lists: those with matching keyword reviews and those without.
+
+It starts by loading place data from a file (results.txt), which includes Place Name, Latitude, Longitude, and Place ID. The Place ID is crucial because it uniquely identifies each location and allows us to fetch reviews. The fetch_reviews function retrieves reviews for each place using the Google Places API. If no reviews are found, the code gracefully handles this by returning an empty list.
+
+Next, the filter_reviews function checks if any of the reviews contain the specified keywords. Places with at least one matching review are stored in the places_with_matching_reviews list, while places without matching reviews go into the places_without_matching_reviews list. The results are printed, and an option to print full reviews is available (commented out).
+
+This code refines the broader dataset by identifying relevant places, making the project more efficient by focusing on locations that meet the search criteria, which aids in generating actionable insights for further analysis.

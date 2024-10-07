@@ -1,0 +1,55 @@
+Matching
+
+Decision: Addresses are compared based on the first four digits extracted from the strings. 
+The matching logic uses sets to quickly find common and distinct addresses between the CSV and TXT data.
+
+Rationale: This is efficient for simple numeric comparisons, but the decision involves whether this level of 
+comparison is sufficient. I have to consider edge cases where the first four digits alone might not 
+uniquely identify an address, and whether a more sophisticated comparison is needed.
+
+
+Decision: The function extract_first_four_digits assumes addresses have at least one four-digit numeric sequence,
+ which is extracted. If no such sequence exists, None is returned.
+
+Rationale: This logic works well for addresses with clear numeric components, but I am working on edge edge cases, 
+such as addresses that don't contain four consecutive digits or contain multiple numeric sequences.
+
+
+FLOW OF CODE:
+
+The compare_addresses function first calls read_addresses_from_csv(csv_file_path) to read the addresses from the
+ CSV file.
+
+Inside read_addresses_from_csv, the CSV file is read using pandas.read_csv().
+The program tries to read the file in utf-8 encoding first, and if that fails, it retries with latin1.
+
+
+It searches for a column named 'Address'. If the column is not found, a KeyError is 
+raised.
+
+For each address in the column, the function calls extract_first_four_digits(address), which extracts 
+the first four-digit number found in the address.
+
+After reading the addresses from the CSV, compare_addresses calls read_addresses_from_txt(txt_file_path)
+ to read addresses from the TXT file.
+
+This function opens the TXT file and processes it line by line.
+For each line, it searches for a string that starts with "Address:" using a regular expression. 
+
+If a match is found, the address is extracted.
+It then calls extract_first_four_digits(address) to extract the first four digits from the address.
+
+The function extract_first_four_digits(address) is used by both read_addresses_from_csv and 
+read_addresses_from_txt. It works as follows:
+
+It uses a regular expression re.search(r'\d{4}', address) to search for any four consecutive digits in 
+the address string.
+If a match is found, it returns the first occurrence of four digits as a string. Otherwise, it returns
+None.
+
+After both read_addresses_from_csv and read_addresses_from_txt return their respective dictionaries,
+ compare_addresses proceeds with the comparison:
+
+It creates sets of the first four digits from the CSV and TXT dictionaries
+It finds addresses that exist in both the CSV and TXT files based on the first four digits
+It then outputs this data 
