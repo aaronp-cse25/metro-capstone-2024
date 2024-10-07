@@ -1,0 +1,63 @@
+api_key: "put your api key here"
+
+# WARNING: 
+# For each keyword you add to the queries section below,
+# it will take more time and more money to query, so be careful with this.
+queries:
+  - tobacco
+  # - gas station
+  # - convenience store
+  # - liquor store
+
+keywords:
+  - marlboro
+  - camel
+  - newport
+  - wave
+  - vape
+  - tobacco
+  - smoke
+  - cigarette
+  - fog
+  - cigar
+  - cloud
+  - vapor
+  - cigarette
+  - tobacco
+  - smoke
+  - snuff
+  - dry snuff
+  - moist snuff
+  - smokeless tobacco
+  - plug tobacco
+  - twist tobacco
+  - loose leaf chewing tobacco
+  - chewing tobacco
+  - snus
+  - dissolvable tobacco
+  - vape
+  - vapor
+  - smokers
+  - smokeshop
+  - smoker
+  - cigs
+  - smoking
+  - smokin
+  - Marlboro
+  - Newport
+  - Camel
+  - Parliament
+  - Kool
+  - Kent
+  - Redwood Reserves
+  - Hemp & Barrel
+  - USA Gold
+  - Montclair
+  - Pyramid
+  - Maverick
+  - Basic
+  - L&M
+  - Pall Mall
+  - Doral
+  - Winston
+  - Kent
