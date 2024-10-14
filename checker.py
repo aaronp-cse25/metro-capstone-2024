@@ -34,6 +34,7 @@ def read_addresses_from_txt(txt_file_path):
     return addresses
 
 # Function to extract the first four digits of an address
+
 def extract_first_four_digits(address):
     match = re.search(r'\d{4}', address) 
     return match.group(0) if match else None

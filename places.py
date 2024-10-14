@@ -201,6 +201,7 @@ def perform_fuzzy_matching(google_df, arcgis_df):
                 matched_results.append({
                     'Google Place Name': google_row['Place Name'],
                     'Google Address': google_row['Address'],  # Original Google Address for reference
+                    'Google Place ID': google_row['Place ID'],
                     'ArcGIS Best Match': best_match[0],
                     'Match Score': best_match[1],
                     'Matched Street Name': best_match[0]  # Get the street name from ArcGIS
@@ -210,6 +211,7 @@ def perform_fuzzy_matching(google_df, arcgis_df):
                 unmatched_google_addresses.append({
                     'Google Place Name': google_row['Place Name'],
                     'Google Address': google_row['Address'],  # Original Google Address for reference
+                    'Google Place ID': google_row['Place ID'],
                     'Closest ArcGIS Match': best_match[0],
                     'Closest Match Score': best_match[1]
                 })  # Store unmatched row with closest match info
@@ -227,8 +229,8 @@ def perform_fuzzy_matching(google_df, arcgis_df):
 # Function to save results to CSV
 def save_results_to_csv(matched_df, unmatched_df):
     try:
-        matched_file_path = f'matched_results_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv'
-        unmatched_file_path = f'unmatched_results_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv'
+        matched_file_path = f'matched_results.csv'
+        unmatched_file_path = f'unmatched_results.csv'
 
         matched_df.to_csv(matched_file_path, index=False)
         unmatched_df.to_csv(unmatched_file_path, index=False)
@@ -255,6 +257,9 @@ def main():
         matched_df, unmatched_df = perform_fuzzy_matching(louisville_results_df, arcgis_df)
         # Step 7: Save results to CSV files
         save_results_to_csv(matched_df, unmatched_df)
+        # Call function from another file with the dataframes
+
+
     except Exception as e:
         logging.error(f"An error occurred in main: {e}")
 

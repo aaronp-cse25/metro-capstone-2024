@@ -1,37 +1,33 @@
 import csv
 import requests
+import yaml
+import pandas as pd
+import logging
 
-# API key (Replace with your actual API key)
-credentials = 'AIzaSyA6HnFsDI6RGEH_OrR7OTJlqr2e_T0pQ9A'
-
-# Keywords to filter reviews
-keywords = ['tobacco', 'vape', 'cigarette', 'hookah', 'cannibus', 'kratom']
-
-# Function to load place IDs from results.txt and strip spaces from headers
-def load_place_ids(file_name):
-    places = []
+# Function to load config from YAML
+def load_config_from_yaml(file_path):
     try:
-        with open(file_name, mode='r') as file:
-            csv_reader = csv.DictReader(file)
-            # Strip spaces from headers
-            csv_reader.fieldnames = [header.strip() for header in csv_reader.fieldnames]
-           # print(f"Processed Headers: {csv_reader.fieldnames}")
-            for row in csv_reader:
-                place_id = row['Place ID'].strip()
-                name = row['Place Name'].strip()
-                if place_id and name:
-                    places.append({
-                        'place_id': place_id,
-                        'name': name
-                    })
-                else:
-                    print(f"Warning: No 'Place ID' found for {row}")
+        with open(file_path, 'r') as file:
+            config_data = yaml.safe_load(file)
+        keywords_df = pd.DataFrame(config_data['keywords'], columns=['keyword'])
+        credentials = config_data['api_key']
+        logging.info("Loaded config from YAML successfully")
+        return credentials, keywords_df
     except Exception as e:
-        print(f"Error reading {file_name}: {e}")
-    return places
+        logging.error(f"Failed to load config from YAML: {e}")
+        raise
+
+# Function to load place IDs, Names, and Addresses from CSV
+def load_place_ids(file_name):
+    try:
+        df = pd.read_csv(file_name, usecols=['Google Place ID', 'Google Place Name', 'Google Address'])
+        return df
+    except Exception as e:
+        logging.error(f"Error reading {file_name}: {e}")
+        raise
 
 # Function to fetch reviews using place_id
-def fetch_reviews(place_id):
+def fetch_reviews(place_id, credentials):
     details_url = f"https://maps.googleapis.com/maps/api/place/details/json"
     params = {
         'place_id': place_id,
@@ -40,14 +36,12 @@ def fetch_reviews(place_id):
     }
     try:
         response = requests.get(details_url, params=params)
-        response.raise_for_status()  # Raise an error for bad status codes
+        response.raise_for_status()
         details_response = response.json()
-
-        # Extract the reviews if present
         reviews = details_response.get('result', {}).get('reviews', [])
         return reviews
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching details for place_id {place_id}: {e}")
+        logging.error(f"Error fetching details for place_id {place_id}: {e}")
         return []
 
 # Function to filter reviews by keywords
@@ -59,47 +53,49 @@ def filter_reviews(reviews, keywords):
             filtered_reviews.append(review)
     return filtered_reviews
 
-# Function to fetch and filter reviews, and store places into two lists
-def fetch_and_store_reviews(file_name):
-    # Load place IDs from results file
-    places = load_place_ids(file_name)
-
-    # Lists to store places based on review matches
+# Main function to fetch and process reviews
+def fetch_and_store_reviews(file_name, credentials, keywords):
+    df = load_place_ids(file_name)
     places_with_matching_reviews = []
     places_without_matching_reviews = []
 
-    # Fetch and filter reviews for each place
-    for place in places:
-        place_id = place['place_id']
-        name = place['name']
-        reviews = fetch_reviews(place_id)
+    for index, row in df.iterrows():
+        place_id = row['Google Place ID']
+        name = row['Google Place Name']
+        reviews = fetch_reviews(place_id, credentials)
         filtered_reviews = filter_reviews(reviews, keywords)
-
         if filtered_reviews:
             places_with_matching_reviews.append({
-                'name': name,
-                'place_id': place_id,
-                'filtered_reviews': filtered_reviews
+                'Place ID': place_id,
+                'Place Name': name,
+                'Address': row['Google Address'],
+
             })
         else:
             places_without_matching_reviews.append({
-                'name': name,
-                'place_id': place_id
+                'Place ID': place_id,
+                'Place Name': name,
+                'Address': row['Google Address']
             })
 
-    # Print results: places with and without matching reviews
-    print("\nPlaces with matching keyword reviews:")
-    for place in places_with_matching_reviews:
-        print(f"Name: {place['name']}, Place ID: {place['place_id']}")
-        # Uncomment below to print filtered reviews
-        # for review in place['filtered_reviews']:
-        #     print(f" - {review['text']} (Rating: {review['rating']})")
+    matched_df = pd.DataFrame(places_with_matching_reviews)
+    unmatched_df = pd.DataFrame(places_without_matching_reviews)
 
-    print("\nPlaces without matching keyword reviews:")
-    for place in places_without_matching_reviews:
-        print(f"Name: {place['name']}, Place ID: {place['place_id']}")
+    # Log results
+    logging.info("\nPlaces with matching keyword reviews count: %d", len(matched_df))
+    logging.info(matched_df.to_string())
 
-    # Optional: Store the places into files or do further processing if needed
+    logging.info("\nPlaces without matching keyword reviews count: %d", len(unmatched_df))
+    logging.info(unmatched_df.to_string())
 
-# Example call to fetch, filter, and print the places
-fetch_and_store_reviews('results.txt')
+    # Save DataFrames to CSVs
+    matched_df.to_csv('matched_2.csv', index=False)
+    unmatched_df.to_csv('unmatched_2.csv', index=False)
+
+if __name__ == "__main__":
+    # Set up logging to file
+    logging.basicConfig(filename='log2.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+    credentials, keywords_df = load_config_from_yaml('config.yaml')
+    keywords = keywords_df['keyword'].tolist()
+    fetch_and_store_reviews('unmatched_results.csv', credentials, keywords)
