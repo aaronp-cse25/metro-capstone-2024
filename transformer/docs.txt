@@ -1,0 +1,40 @@
+Transformer Function
+
+If we need to change the anything related to the grids
+- number of boxes
+- location of the grids
+- size of the grids
+- how far Louisville spans 
+- excluding boxes in the grid to query in
+Please follow the following steps to get a new set of coordinates
+
+Steps:
+
+1. Ensure that your python environment has pandas and pyproj installed
+If you are unsure of how to do this, look into documentation on using pip to install
+
+2. Ensure that the document with the Kentucky State Plane coordinates: 
+	a. is a CSV file
+	b. has the labels: XMIN	YMIN XMAX YMAX as the headers
+	c. is in the same folder as your transformer.py file
+	d. is named 'Jefferson_State_Zones.csv'
+		- alternatively you can change the path name in the transformer python file to your appropriate file names
+		
+3. Now, go ahead and run the transformer function. If everything goes smoothly, you should see the words:
+"Transformed CSV saved to coordinates.csv" on the screen and in the file, you should see the new coordinates.csv file
+
+4. Replace the old coordinates.csv file with the new one 
+
+Debugging:
+
+1. If you see an error mention: [Errno 2] No such file or directory: 'C:...\\Jefferson_State_Zones.csv'
+Please make sure that you file is appropriately named and follows all of the guidelines in Step 2
+
+2. If you see any errors regarding permission: Try running your application (Visual Studio, terminal, etc) in admin mode.
+Also delete any old files in the current folder that are unrelated or not necessary. We should only need the transformer.py
+and the Jefferson_State_Zones.csv
+
+3. If you don't think that the code is properly picking up the new values, please ensure that the file has been properly
+replaced and then try rebuilding your project/solution. In Visual Studio, this is done by right project at the top of the
+solution explorer, and then clicking rebuild 
+
