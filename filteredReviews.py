@@ -3,6 +3,8 @@ import requests
 import yaml
 import pandas as pd
 import logging
+import os
+
 
 # Function to load config from YAML
 def load_config_from_yaml(file_path):
@@ -20,7 +22,7 @@ def load_config_from_yaml(file_path):
 # Function to load place IDs, Names, and Addresses from CSV
 def load_place_ids(file_name):
     try:
-        df = pd.read_csv(file_name, usecols=['Google Place ID', 'Google Place Name', 'Google Address'])
+        df = pd.read_csv(file_name, usecols=['Google Place ID', 'Google Place Name', 'Google Address', 'lat', 'long'])
         return df
     except Exception as e:
         logging.error(f"Error reading {file_name}: {e}")
@@ -69,13 +71,17 @@ def fetch_and_store_reviews(file_name, credentials, keywords):
                 'Place ID': place_id,
                 'Place Name': name,
                 'Address': row['Google Address'],
+                'lat': row["lat"],
+                'long': row["long"]
 
             })
         else:
             places_without_matching_reviews.append({
                 'Place ID': place_id,
                 'Place Name': name,
-                'Address': row['Google Address']
+                'Address': row['Google Address'],
+                'lat': row["lat"],
+                'long': row["long"]
             })
 
     matched_df = pd.DataFrame(places_with_matching_reviews)
@@ -89,13 +95,16 @@ def fetch_and_store_reviews(file_name, credentials, keywords):
     logging.info(unmatched_df.to_string())
 
     # Save DataFrames to CSVs
-    matched_df.to_csv('matched_2.csv', index=False)
-    unmatched_df.to_csv('unmatched_2.csv', index=False)
+    matched_df.to_csv(os.path.join('results', 'review_hits.csv'), index=False)
+    unmatched_df.to_csv(os.path.join('results', 'review_misses.csv'), index=False)
 
 if __name__ == "__main__":
     # Set up logging to file
-    logging.basicConfig(filename='log2.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+    logging.basicConfig(filename=os.path.join('results', 'log2.txt'), level=logging.INFO,
+                        format='%(asctime)s - %(levelname)s - %(message)s')
 
     credentials, keywords_df = load_config_from_yaml('config.yaml')
     keywords = keywords_df['keyword'].tolist()
-    fetch_and_store_reviews('unmatched_results.csv', credentials, keywords)
+    fetch_and_store_reviews('results/unmatched_candidates.csv', credentials, keywords)
+

@@ -3,6 +3,8 @@ import yaml
 import pandas as pd
 import logging
 import re
+import os
+
 from datetime import datetime
 from fuzzywuzzy import fuzz, process
 
@@ -13,7 +15,7 @@ pd.set_option('display.max_colwidth', None) # Show full column width for long te
 
 # Configure logging
 logging.basicConfig(
-    filename='logs.txt', 
+    filename=os.path.join('results', 'log.txt'),
     level=logging.INFO, 
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
@@ -88,7 +90,7 @@ def get_tobacco_shops(api_key, rectangles, queries_df):
             headers = {
                 'Content-Type': 'application/json',
                 'X-Goog-Api-Key': api_key,
-                'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.id'
+                'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.id,places.location'
             }
 
             try:
@@ -106,7 +108,9 @@ def get_tobacco_shops(api_key, rectangles, queries_df):
                     place_id = place.get('id')
                     display_name = place.get('displayName', {}).get('text', 'No name available')
                     formatted_address = place.get('formattedAddress', 'No address available')
-                    
+                    location = place.get('location', {})
+                    latitude = location.get('latitude', 'No lat available')
+                    longitude = location.get('longitude', 'No lon available')
                     if place_id and place_id not in unique_place_ids:
                         unique_place_ids.add(place_id)
                         inside_count += 1
@@ -117,7 +121,10 @@ def get_tobacco_shops(api_key, rectangles, queries_df):
                             'Keyword': query,
                             'Place Name': display_name,
                             'Address': formatted_address,
-                            'Place ID': place_id  # Include Place ID in the results
+                            'Place ID': place_id,  # Include Place ID in the results
+                            'Latitude': latitude,
+                            'Longitude': longitude
+
                         })
 
             except requests.exceptions.RequestException as e:
@@ -202,6 +209,8 @@ def perform_fuzzy_matching(google_df, arcgis_df):
                     'Google Place Name': google_row['Place Name'],
                     'Google Address': google_row['Address'],  # Original Google Address for reference
                     'Google Place ID': google_row['Place ID'],
+                    'lat': google_row['Latitude'],
+                    'long': google_row['Longitude'],
                     'ArcGIS Best Match': best_match[0],
                     'Match Score': best_match[1],
                     'Matched Street Name': best_match[0]  # Get the street name from ArcGIS
@@ -212,6 +221,8 @@ def perform_fuzzy_matching(google_df, arcgis_df):
                     'Google Place Name': google_row['Place Name'],
                     'Google Address': google_row['Address'],  # Original Google Address for reference
                     'Google Place ID': google_row['Place ID'],
+                    'lat': google_row['Latitude'],
+                    'long': google_row['Longitude'],
                     'Closest ArcGIS Match': best_match[0],
                     'Closest Match Score': best_match[1]
                 })  # Store unmatched row with closest match info
@@ -229,14 +240,16 @@ def perform_fuzzy_matching(google_df, arcgis_df):
 # Function to save results to CSV
 def save_results_to_csv(matched_df, unmatched_df):
     try:
-        matched_file_path = f'matched_results.csv'
-        unmatched_file_path = f'unmatched_results.csv'
+
+        os.makedirs('results', exist_ok=True)
+        matched_file_path = os.path.join('results', 'fuzzy_matched.csv')
+        unmatched_file_path = os.path.join('results', 'unmatched_candidates.csv')
 
         matched_df.to_csv(matched_file_path, index=False)
         unmatched_df.to_csv(unmatched_file_path, index=False)
         
-        logging.info(f"Matched results saved to {matched_file_path}")
-        logging.info(f"Unmatched results saved to {unmatched_file_path}")
+        logging.info(f"Fuzzy matched results saved to {matched_file_path}")
+        logging.info(f"Unmatched candidate results saved to {unmatched_file_path}")
     except Exception as e:
         logging.error(f"Failed to save results to CSV: {e}")
         raise

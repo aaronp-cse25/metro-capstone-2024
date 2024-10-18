@@ -1,0 +1,121 @@
+2024-10-18 01:02:08,413 - INFO - Loaded config from YAML successfully
+2024-10-18 01:02:43,114 - INFO - 
+Places with matching keyword reviews count: 0
+2024-10-18 01:02:43,117 - INFO - Empty DataFrame
+Columns: []
+Index: []
+2024-10-18 01:02:43,117 - INFO - 
+Places without matching keyword reviews count: 112
+2024-10-18 01:02:43,124 - INFO -                         Place ID                                          Place Name                                                                                 Address        lat       long
+0    ChIJ60Ywx3eeaYgRRMQmODcCyiA                                  Costco Gas Station                                  5020 NORTON HEALTHCARE BLVD, LOUISVILLE, KY 40241, USA  38.316597 -85.574200
+1    ChIJZ0HEHXqeaYgR9oTWOwsi2as                           Dairy Queen Grill & Chill                                  4811 NORTON HEALTHCARE BLVD, LOUISVILLE, KY 40241, USA  38.312117 -85.570591
+2    ChIJkX2HWHaeaYgRuRGtFMIsNEg                        Norton Pharmacy - Brownsboro                          4960 NORTON HEALTHCARE BLVD LEVEL 1, LOUISVILLE, KY 40241, USA  38.315299 -85.576044
+3    ChIJ09v8xu-faYgRfyni4q7Yn1c                                     Costco Pharmacy                                  5020 NORTON HEALTHCARE BLVD, LOUISVILLE, KY 40241, USA  38.317051 -85.573531
+4    ChIJ60Ywx3eeaYgRwGzNUtf272c                                    Costco Wholesale                                  5020 NORTON HEALTHCARE BLVD, LOUISVILLE, KY 40241, USA  38.316885 -85.573431
+5    ChIJgY63zZWeaYgRdfelamXdDCQ                                 Walmart Supercenter                                          3706 DIANN MARIE RD, LOUISVILLE, KY 40241, USA  38.300153 -85.545574
+6    ChIJAbQX03GfaYgRlfZw_cDMrZc                                      Public Storage                                             3913 ACCOMACK DR, LOUISVILLE, KY 40241, USA  38.302302 -85.539057
+7    ChIJ931LjsCfaYgR69hSr92l-ws                        Apotheco Pharmacy Louisville                                        3582 SPRINGHURST BLVD, LOUISVILLE, KY 40241, USA  38.298374 -85.561511
+8    ChIJVc5dD5SeaYgRwkfVpbZi-4o                                    Walmart Pharmacy                                          3706 DIANN MARIE RD, LOUISVILLE, KY 40241, USA  38.300831 -85.545152
+9    ChIJ5wKSb4qeaYgRxCJ0g72yBjY         Rainbow Blossom Springhurst Wellness Center                                        3608 SPRINGHURST BLVD, LOUISVILLE, KY 40241, USA  38.299867 -85.560712
+10   ChIJTdbtELOeaYgRwlTmEPtGlgs                                The H.T. Hackney Co.                                              4015 COLLINS LN, LOUISVILLE, KY 40245, USA  38.301675 -85.521746
+11   ChIJXZJyJACZaYgRlqvEosy4URw                             Kroger Wine and Spirits                                                 12440 KY-146, LOUISVILLE, KY 40245, USA  38.292082 -85.509461
+12   ChIJV3WRE8C48ygR9M7oWJFqUSk                                          AffirmedRx                                      10200 FOREST SPRINGS DR, LOUISVILLE, KY 40223, USA  38.293228 -85.508755
+13   ChIJ-0IJx3FzaYgRfR2JX2UsSuU                                         Hill Lane M                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+14   ChIJ-0IJx3FzaYgRrKtfbGlCEqA                                        Hill Laura J                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+15   ChIJ-0IJx3FzaYgRZCr47higa7U                               Stacy L. Dobbs, Pharm                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+16   ChIJ-0IJx3FzaYgRl5pTe2k_Te4                                    Canada Charles A                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+17   ChIJ-0IJx3FzaYgRHAaQayz6KJg                                      Finnell Lisa H                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+18   ChIJ-0IJx3FzaYgRkV3jgC4v4xY                                     Wyant Michael B                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+19   ChIJ-0IJx3FzaYgRVGojJC7VLuQ                                      Mc Daniel Gail                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+20   ChIJ-0IJx3FzaYgRK4IZ5w-ChBg                                   Esterle Richard L                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+21   ChIJ-0IJx3FzaYgRyAPbMNxij2A                                      Rueff Denise N                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270739 -85.698423
+22   ChIJ-0IJx3FzaYgRJ_NTTWtbWF8                                     Gordon Angela M                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+23   ChIJ-0IJx3FzaYgRsYyLFnunvWg                                    Matuschka Paul R                                            800 ZORN AVE #119, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+24   ChIJ-0IJx3FzaYgRJDEA56EeUOU                                 Gentleman William B                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+25   ChIJ-0IJx3FzaYgRymtgY7QgDYc                                       Dukes Larry G                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+26   ChIJ-0IJx3FzaYgRQeoiHgMOH0M                                      Hacker Oscar B                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+27   ChIJ-0IJx3FzaYgRcxEG_vQjdUY                                       Kersey Dale L                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+28   ChIJ-0IJx3FzaYgRj7-A9ZEDdT4                                Weitendorf Frederick                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+29   ChIJ-0IJx3FzaYgR_ddx3nXdNyg                                    Sandusky Charles                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+30   ChIJ-0IJx3FzaYgRXr2xZt4sDjM                              David L. Mcleland, RPH                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270596 -85.698495
+31   ChIJ01UKx3FzaYgRR9NodtnIFDw                        Louisville VA Medical Center                                                 800 ZORN AVE, LOUISVILLE, KY 40206, USA  38.270286 -85.696953
+32   ChIJAQDAVb9yaYgRdj2po6B4k-M                          MainPointe Pharmaceuticals                                         2604 RIVER GREEN CIR, LOUISVILLE, KY 40206, USA  38.274779 -85.707122
+33   ChIJcVDhM6Z1aYgReMlEYiBM91g                                Luckett Tobaccos Inc                                    2000 WARRINGTON WAY # 163, LOUISVILLE, KY 40222, USA  38.280878 -85.632556
+34   ChIJn2Zq6qV1aYgR-IiL3PllXro                                  Kroger Fuel Center                                                   4946 US-42, LOUISVILLE, KY 40222, USA  38.283974 -85.632013
+35   ChIJs2ps8KV1aYgR2v30vPbQEyQ                                          AT&T Store                                                   4936 US-42, LOUISVILLE, KY 40222, USA  38.282913 -85.632658
+36   ChIJK7LbOrqfaYgRRoohjPf1jWw                                 WEX Fuel Management                                  9500 ORMSBY STATION RD #402, LOUISVILLE, KY 40223, USA  38.263185 -85.575952
+37   ChIJBRSXm6-faYgRCJkZKrZjZak                                            Omnicare                                     9960 CORPORATE CAMPUS DR, LOUISVILLE, KY 40223, USA  38.265192 -85.569408
+38   ChIJP9pQXsCfaYgRH4fwlsAGeXA                               Pharmacy Alternatives                                       805 N WHITTINGTON PKWY, LOUISVILLE, KY 40223, USA  38.257484 -85.583447
+39   ChIJfUfMQuyhaYgRuKLyfP-Ud6U                              PharMerica Corporation                                       805 N WHITTINGTON PKWY, LOUISVILLE, KY 40222, USA  38.257446 -85.583395
+40   ChIJ0ara_kafaYgRFakhnBC_TL8                                   M. Joseph Medical                                      11900 BRINLEY AVE # 200, LOUISVILLE, KY 40243, USA  38.249993 -85.532995
+41   ChIJW3CMFxyZaYgRHrmj6Xe3Q3o                      Thorntons Store Support Center                                       2600 JAMES THORNTON WY, LOUISVILLE, KY 40245, USA  38.275603 -85.493964
+42   ChIJ0exaQ4WfaYgRzFOllqbxMt4                                 Extra Space Storage                                   3014 N WINCHESTER ACRES RD, LOUISVILLE, KY 40245, USA  38.288581 -85.522265
+43   ChIJ2Y7SVdaYaYgRAZDjmQ1Cufs                             Accredo Health Services                                2115 STANLEY GAULT PKWY # 150, LOUISVILLE, KY 40223, USA  38.270675 -85.512585
+44   ChIJlz258ZaZaYgRyeuYEoPcKuE                           Norton Specialty Pharmacy                                 2700 STANLEY GAULT PKWY #103, LOUISVILLE, KY 40223, USA  38.276381 -85.518056
+45   ChIJk_YsW-yhaYgR6VydjC--tnU                           Onco360 Oncology Pharmacy                                    13410 EASTPOINT CENTRE DR, LOUISVILLE, KY 40223, USA  38.280094 -85.509080
+46   ChIJq6rqzLmYaYgR3AqfiEEmLxU                                  Neil Medical Group                                      13040 EASTGATE PARK WAY, LOUISVILLE, KY 40223, USA  38.249235 -85.508837
+47   ChIJ0b8_nK2YaYgR07I837txWoQ                           Preferred Medical Network                                           2400 BUSH RIDGE DR, LOUISVILLE, KY 40245, USA  38.272303 -85.488767
+48   ChIJM1lLj9mYaYgRIU1LU-4zDX8                              BluePearl Pet Hospital                                         13160 MAGISTERIAL DR, LOUISVILLE, KY 40223, USA  38.267948 -85.508050
+49   ChIJh4wk8VyZaYgRWagd6PPxvnQ                                   Shalia Botanicals                                      1920 STANLEY GAULT PKWY, LOUISVILLE, KY 40223, USA  38.267304 -85.511584
+50   ChIJrx16YseYaYgRHTm0-K7hoZA                                  Crossfit Bluegrass                             13005 MIDDLETOWN INDUSTRIAL BLVD, LOUISVILLE, KY 40223, USA  38.251392 -85.512318
+51   ChIJLZh6E6eZaYgR-CWgn5CUeW4                                  The Phancy Pharmer                                        3515 WOODMONT PARK LN, LOUISVILLE, KY 40245, USA  38.285902 -85.477391
+52   ChIJezs62jxtaYgR0UAja6qwXak                                       Market Liquor                      11AM- 2A, SUN 1PM-1AM, 2800 W MARKET ST, LOUISVILLE, KY 40212, USA  38.259568 -85.796660
+53   ChIJw75SHr9yaYgRO_eaIu26Fe8                   Waterfront Bourbon Wine & Spirits                      ENTRANCE ON FLOYD, 222 E WITHERSPOON ST, LOUISVILLE, KY 40202, USA  38.257339 -85.747747
+54   ChIJNTTWUQBzaYgRipk60w7rrt0                              U of L Health Pharmacy                                      200 ABRAHAM FLEXNER WAY, LOUISVILLE, KY 40202, USA  38.249227 -85.751143
+55   ChIJLVv8w7ZyaYgRayLQdsYu6o0                             Medical Towers Pharmacy                          MEDICAL TOWERS SOUTH, 234 E GRAY ST, LOUISVILLE, KY 40202, USA  38.246587 -85.749896
+56   ChIJq_Q5GilzaYgRjf2upYfeCtE        University of Louisville Outpatient Pharmacy                                             550 S JACKSON ST, LOUISVILLE, KY 40202, USA  38.248302 -85.745665
+57   ChIJO9RezeJzaYgRy--j3kqjdrY  Norton Children's Infusion Pharmacy - Novak Center                                  411 E CHESTNUT ST SUITE 497, LOUISVILLE, KY 40202, USA  38.248581 -85.746405
+58   ChIJa843F91NaIgRsdisJGsa740                                  Green Remedy, Inc.                                                 1000 ZANE ST, LOUISVILLE, KY 40210, USA  38.238511 -85.769949
+59   ChIJTSvDY39zaYgRAhlcJrsgoWA                            Smoke N Snacks Mini Mart                                                  1029 US-150, LOUISVILLE, KY 40204, USA  38.239737 -85.723169
+60   ChIJC3EvUGdzaYgRCg0U0_xKrnI                                                Lode                                         1001 E WASHINGTON ST, LOUISVILLE, KY 40206, USA  38.255108 -85.733432
+61   ChIJA11VQh5zaYgRjWA_-gTaU7c                                       Three Sisters                                            2509 GRINSTEAD DR, LOUISVILLE, KY 40206, USA  38.244595 -85.703481
+62   ChIJhe8g0oyfaYgReQMuUYFXJRY                                             Chevron                                 9401 WILLIAMSBURG PLAZA #201, LOUISVILLE, KY 40222, USA  38.240913 -85.581386
+63   ChIJexcSJW-haYgRU1JPVMsZFcI                                        OPMH Project                                          9825 BLUEGRASS PKWY, LOUISVILLE, KY 40299, USA  38.221468 -85.569507
+64   ChIJ7ZyhsrehaYgRRe9bIDyQ070                                            Marathon                                           10921 PLANTSIDE DR, LOUISVILLE, KY 40299, USA  38.209557 -85.553419
+65   ChIJ-SGgTbahaYgR49l1ODD6pSw                              Key Stone Fuel Station                                           10921 PLANTSIDE DR, LOUISVILLE, KY 40299, USA  38.209548 -85.553514
+66   ChIJKfbANjKhaYgRQfMWf7PEg9g                                   Synchrony Rx@Home                                  2703 CHESTNUT STATION COURT, LOUISVILLE, KY 40299, USA  38.207668 -85.532165
+67   ChIJvScUKrihaYgRmtb-RA4mQQU                                          Nutrishare                                           11020 PLANTSIDE DR, LOUISVILLE, KY 40299, USA  38.209382 -85.551073
+68   ChIJq6rqzLmYaYgR3AqfiEEmLxU                                  Neil Medical Group                                      13040 EASTGATE PARK WAY, LOUISVILLE, KY 40223, USA  38.249235 -85.508837
+69   ChIJK5vldX4TaYgRrcGGeBzeSDo                                       Pacific Pride                                                3500 BELLS LN, LOUISVILLE, KY 40211, USA  38.220506 -85.815717
+70   ChIJc7EthxgTaYgRI7zggypexkw                                 Inner Plant Systems                                                3500 BELLS LN, LOUISVILLE, KY 40211, USA  38.220775 -85.815215
+71   ChIJRSyKV2kNaYgR3umXQr16CUA                           Stop N Go Smokes & Liquor                                               427 WARNOCK ST, LOUISVILLE, KY 40217, USA  38.214581 -85.751229
+72   ChIJ2aNneFINaYgRQUYZmjxtbtU                          Abraha Food & Tobacco Mart                                                1101 S 2ND ST, LOUISVILLE, KY 40203, USA  38.236880 -85.756305
+73   ChIJV9aUWWkNaYgR_nZS5Spslac                                      24/7 Stop & Go                                               427 WARNOCK ST, LOUISVILLE, KY 40217, USA  38.214481 -85.751311
+74   ChIJFx4ptlENaYgRruOQRvoER7w                             Urban Express Mini Mart                                             207 W ORMSBY AVE, LOUISVILLE, KY 40203, USA  38.232703 -85.757693
+75   ChIJPUrHCwwNaYgR5HDixTw3PuA                                       Organic Cures                                                 329 W OAK ST, LOUISVILLE, KY 40208, USA  38.235099 -85.759950
+76   ChIJh5GcSWwNaYgRBD-ly_vQ8y4                               Medical Arts Pharmacy                                   1169 EASTERN PKWY STE 1110, LOUISVILLE, KY 40217, USA  38.225865 -85.725517
+77   ChIJA9Aebc4NaYgRzqWCGn2tKi0                           Norton Pharmacy - Audubon  NORTON MEDICAL PLAZA WEST, 2355 POPLAR LEVEL RD FIRST FLOOR, LOUISVILLE, KY 40217, USA  38.215271 -85.722795
+78   ChIJXUMnjHLpaIgR9l69cpEYc5g                               Cap'n Dave's Wellness                                               1105 MILTON ST, LOUISVILLE, KY 40217, USA  38.223534 -85.737790
+79   ChIJU7e-HiNzaYgRbpguNG5hSxE                        Vines Wine Bar & Spirit Shop                                           1985 DOUGLASS BLVD, LOUISVILLE, KY 40205, USA  38.224481 -85.694481
+80   ChIJeVmo0KQMaYgRFFm6bpSe0T0                                 William D. Antle, R                                               2200 DUNDEE RD, LOUISVILLE, KY 40205, USA  38.224387 -85.694145
+81   ChIJQQb7gtIKaYgR7qdLiAM7i9I                     Louisville Compounding Pharmacy                                        3930 DUPONT CIR APT 1, LOUISVILLE, KY 40207, USA  38.231342 -85.632274
+82   ChIJP6rlTgwTaYgRItb_6sthGQ4                                    Mid-Nite Liquors                                               3200 RALPH AVE, LOUISVILLE, KY 40216, USA  38.207914 -85.824745
+83   ChIJT2E5f4MNaYgRVIVhsWC3Vd8               Bluegrass Healthcare Management Group                                             4226 ALLMOND AVE, LOUISVILLE, KY 40209, USA  38.193114 -85.759172
+84   ChIJv2NBk4sMaYgRkm7CrI-jz6M                                New Vitalis Pharmacy                                     4139 CADILLAC CT STE 201, LOUISVILLE, KY 40213, USA  38.200281 -85.701351
+85   ChIJDzZX5YALaYgRSJzaJTGVwgo                                       Omnicare Inc.                                       4400 OLE BRICKYARD CIR, LOUISVILLE, KY 40218, USA  38.191929 -85.682637
+86   ChIJy9VEBUOgaYgRTNFE7bW-sl0                                      RxAlternatives                                            9813 MERIONETH DR, LOUISVILLE, KY 40299, USA  38.204670 -85.576055
+87   ChIJU3X7_pChaYgRYE9cO90HDOA                     Southern Glazers Wine & Spirits                                     2801 CONSTANT COMMENT PL, LOUISVILLE, KY 40299, USA  38.204081 -85.534274
+88   ChIJ0RHpT5GhaYgRS6nxcahnCqY                     Synchrony Pharmacy - Louisville                                  2701 CHESTNUT STATION COURT, LOUISVILLE, KY 40299, USA  38.207402 -85.532200
+89   ChIJKfbANjKhaYgRQfMWf7PEg9g                                   Synchrony Rx@Home                                  2703 CHESTNUT STATION COURT, LOUISVILLE, KY 40299, USA  38.207668 -85.532165
+90   ChIJFUtKPbKhaYgR9IwAZi-S6XA                         MAGNA Pharmaceuticals, Inc.                                            10801 ELECTRON DR, LOUISVILLE, KY 40299, USA  38.202011 -85.557581
+91   ChIJKWz0vYmjaYgRy6HClQXwgvw              CRST The Transportation Solution, Inc.                                    2903 S ENGLISH STATION RD, LOUISVILLE, KY 40299, USA  38.195422 -85.473110
+92   ChIJd2ZvW2SjaYgRpyt68nyyrPk              CRST The Transportation Solution, Inc.                                    3003 S ENGLISH STATION RD, LOUISVILLE, KY 40299, USA  38.194586 -85.470198
+93   ChIJJ5Ru0noMaYgR4R8UO46pC9M                                      Varitech, Inc.                                             4647 PINEWOOD RD, LOUISVILLE, KY 40218, USA  38.185332 -85.690934
+94   ChIJral7HjUKaYgR1aJ6eaYkM10                                   AmerisourceBergen                            6001 GLOBAL DISTRIBUTION WY # 102, LOUISVILLE, KY 40228, USA  38.168825 -85.641685
+95   ChIJdShpoXwWaYgRlkd6BVs3Wik                                        Marathon Gas                                         7520 DISTRIBUTION DR, LOUISVILLE, KY 40258, USA  38.149906 -85.895528
+96   ChIJbQAKGmgOaYgRcNaQP1BAAL4                                 Clean N' Green Fuel                                                7501 GRADE LN, LOUISVILLE, KY 40219, USA  38.134136 -85.733757
+97   ChIJuejbHm4OaYgRIHhWS_AFJBE                            Kuhl's Beer Depot & Eats                                                7302 GRADE LN, LOUISVILLE, KY 40219, USA  38.144128 -85.738814
+98   ChIJP4-LzkcPaYgR2I32jgZGAmo                                            RaceTrac                                          800 AIR COMMERCE DR, LOUISVILLE, KY 40219, USA  38.133606 -85.719729
+99   ChIJq6qqqrsLaYgR_VrJVsAxYVI                                       RX Crossroads                                         5101 AIR COMMERCE DR, LOUISVILLE, KY 40218, USA  38.127624 -85.716008
+100  ChIJ6ewkX-ILaYgRjnKQ8sJSjxk                            RxCrossroads by McKesson                                        5101 JEFF COMMERCE DR, LOUISVILLE, KY 40219, USA  38.153855 -85.670733
+101  ChIJ___v-rGgaYgRbbgqW25bJdU                                        Frocken Hemp                                    9100 FERN CREEK RD #91731, LOUISVILLE, KY 40291, USA  38.155515 -85.591556
+102  ChIJ0wFPwucXaYgRjt2M0Jz50jM                            Responsible Cannabis Use                                             5405 ANGUS CT #4, LOUISVILLE, KY 40272, USA  38.102573 -85.863121
+103  ChIJHXElN8kIaYgRVkJU4Iqn15k                                            Stoker's                                         5201 INTERCHANGE WAY, LOUISVILLE, KY 40229, USA  38.094356 -85.677917
+104  ChIJHXElN8kIaYgR73QYVYFGGvY                            National Tobacco Company                                         5201 INTERCHANGE WAY, LOUISVILLE, KY 40229, USA  38.094356 -85.677917
+105  ChIJn7TAvTkJaYgR3Ou6y1gVrAg                                           DirectCBD                               5201 INTERCHANGE WAY DIRECTCBD, LOUISVILLE, KY 40229, USA  38.093893 -85.677860
+106  ChIJw_5FZ-qnaYgRNRWMFc5Gewg              Top Choice Health Insurance Plans 2025                                            8700 SANCTUARY LN, LOUISVILLE, KY 40291, USA  38.123096 -85.577953
+107  ChIJUZW9TvMJaYgR9IyKme7ipHU                               Laugh Out Loud Smoker                                        135 MKT PL DR SUITE G, LOUISVILLE, KY 40229, USA  38.072334 -85.672388
+108  ChIJs4VdM0MJaYgRxUMbTdSLTds                           VIP Smoke Shop - Hillview                                                254 MKT PL DR, LOUISVILLE, KY 40229, USA  38.073192 -85.670742
+109  ChIJqSpcurwIaYgR2KDedzC_fzc                                        Marathon Gas                                            155 HILLVIEW BLVD, LOUISVILLE, KY 40229, USA  38.078853 -85.668583
+110  ChIJecXmsLwIaYgR4_-vcPNP4gg                                            FiveStar                                            155 HILLVIEW BLVD, LOUISVILLE, KY 40229, USA  38.078853 -85.668583
+111  ChIJs4qgtKYIaYgRylJggoBkVUQ                                         MY PHARMACY                                              170 DR ARLA WAY, LOUISVILLE, KY 40229, USA  38.070022 -85.671234
