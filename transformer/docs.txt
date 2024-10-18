@@ -32,7 +32,7 @@ Please make sure that you file is appropriately named and follows all of the gui
 
 2. If you see any errors regarding permission: Try running your application (Visual Studio, terminal, etc) in admin mode.
 Also delete any old files in the current folder that are unrelated or not necessary. We should only need the transformer.py
-and the Jefferson_State_Zones.csv
+and the Jefferson_State_Zones.csv (the docs can stay as well)
 
 3. If you don't think that the code is properly picking up the new values, please ensure that the file has been properly
 replaced and then try rebuilding your project/solution. In Visual Studio, this is done by right project at the top of the
