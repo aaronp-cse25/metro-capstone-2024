@@ -204,7 +204,7 @@ def perform_fuzzy_matching(google_df, arcgis_df):
             # Find the best match using fuzzy matching
             best_match = process.extractOne(google_address, arcgis_df['Address'], scorer=fuzz.token_sort_ratio)
             
-            if best_match[1] >= 60:  # You can set a threshold for a match score
+            if best_match[1] >= 72:  # You can set a threshold for a match score
                 matched_results.append({
                     'Google Place Name': google_row['Place Name'],
                     'Google Address': google_row['Address'],  # Original Google Address for reference
