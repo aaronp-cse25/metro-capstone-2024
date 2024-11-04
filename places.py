@@ -16,7 +16,7 @@ pd.set_option('display.max_colwidth', None) # Show full column width for long te
 # Configure logging
 logging.basicConfig(
     filename=os.path.join('results', 'log.txt'),
-    level=logging.INFO, 
+    level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
@@ -60,13 +60,13 @@ def load_coordinates_from_csv(file_path):
 # Function to get tobacco shops using Google Places API
 def get_tobacco_shops(api_key, rectangles, queries_df):
     url = "https://places.googleapis.com/v1/places:searchText"
-    
+
     results_list = []  # Initialize a list to collect results
     totals = []
 
     for rect_index, rectangle in rectangles.iterrows():
         inside_count = 0
-        unique_place_ids = set()
+        unique_places = {}
 
         for _, row in queries_df.iterrows():
             query = row['keyword']
@@ -111,21 +111,21 @@ def get_tobacco_shops(api_key, rectangles, queries_df):
                     location = place.get('location', {})
                     latitude = location.get('latitude', 'No lat available')
                     longitude = location.get('longitude', 'No lon available')
-                    if place_id and place_id not in unique_place_ids:
-                        unique_place_ids.add(place_id)
-                        inside_count += 1
-                        
-                        # Collect the result in a list
-                        results_list.append({
-                            'Box': rect_index + 1,
-                            'Keyword': query,
-                            'Place Name': display_name,
-                            'Address': formatted_address,
-                            'Place ID': place_id,  # Include Place ID in the results
-                            'Latitude': latitude,
-                            'Longitude': longitude
 
-                        })
+                    if place_id:
+                        if place_id not in unique_places:
+                            unique_places[place_id] = {
+                                'Box': rect_index + 1,
+                                'Place Name': display_name,
+                                'Address': formatted_address,
+                                'Place ID': place_id,
+                                'Latitude': latitude,
+                                'Longitude': longitude,
+                                'Keywords': [query]
+                            }
+                            inside_count += 1
+                        else:
+                            unique_places[place_id]['Keywords'].append(query)
 
             except requests.exceptions.RequestException as e:
                 logging.error(f"Error making API request for query '{query}' in Box {rect_index + 1}: {e}")
@@ -133,24 +133,25 @@ def get_tobacco_shops(api_key, rectangles, queries_df):
                 logging.error(f"Unexpected error in Box {rect_index + 1}: {e}")
 
         totals.append(inside_count)
+        results_list.extend(unique_places.values())
 
     # Convert the results list to a DataFrame at the end
     results_df = pd.DataFrame(results_list)
     
-    # Capitalize the 'Address' field
+# Capitalize the 'Address' field
     if not results_df.empty:
-        results_df['Address'] = results_df['Address'].str.upper()  # Capitalize address
-    
+            results_df['Address'] = results_df['Address'].str.upper()  # Capitalize address
+    results_df['Keywords'] = results_df['Keywords'].apply(lambda x: ', '.join(x))
+
     return results_df, totals
 
-# Function to filter results to include only Louisville, KY
 def filter_louisville_results(results_df):
     try:
         logging.info(f"Starting filtering results for Louisville. Total records before filtering: {len(results_df)}")
-        
+                
         # Filter to include only addresses containing 'LOUISVILLE, KY'
         filtered_df = results_df[results_df['Address'].str.contains('LOUISVILLE, KY', na=False)]
-        
+
         logging.info(f"Successfully filtered for Louisville results. Remaining records: {len(filtered_df)}")
         return filtered_df
     except Exception as e:
@@ -191,7 +192,7 @@ def load_arcgis_data():
         logging.error(f"Failed to fetch ArcGIS data: {e}")
         raise
 
-# Step 3: Fuzzy matching process
+    # Step 3: Fuzzy matching process
 def perform_fuzzy_matching(google_df, arcgis_df):
     matched_results = []
     unmatched_google_addresses = []  # Initialize a list to store unmatched addresses
@@ -213,7 +214,8 @@ def perform_fuzzy_matching(google_df, arcgis_df):
                     'long': google_row['Longitude'],
                     'ArcGIS Best Match': best_match[0],
                     'Match Score': best_match[1],
-                    'Matched Street Name': best_match[0]  # Get the street name from ArcGIS
+                    'Matched Street Name': best_match[0],  # Get the street name from ArcGIS
+                    'Keywords': google_row['Keywords']
                 })
             else:
                 # If no match, still append the closest match
@@ -224,11 +226,12 @@ def perform_fuzzy_matching(google_df, arcgis_df):
                     'lat': google_row['Latitude'],
                     'long': google_row['Longitude'],
                     'Closest ArcGIS Match': best_match[0],
-                    'Closest Match Score': best_match[1]
-                })  # Store unmatched row with closest match info
+                    'Closest Match Score': best_match[1],
+                    'Keywords': google_row['Keywords']
+                })
 
         matched_df = pd.DataFrame(matched_results)
-        unmatched_df = pd.DataFrame(unmatched_google_addresses)  # Create a DataFrame for unmatched addresses
+        unmatched_df = pd.DataFrame(unmatched_google_addresses)
         
         logging.info(f"Successfully performed fuzzy matching. Matched: {len(matched_df)}, Unmatched: {len(unmatched_df)}")
         return matched_df, unmatched_df
