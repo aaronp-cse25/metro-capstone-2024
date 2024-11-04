@@ -1,5 +1,4 @@
 Transformer Function
-#TODO: Read in the Jefferson_State_Zones from the open source database once that's published
 
 If we need to change the anything related to the grids
 - number of boxes
@@ -14,28 +13,26 @@ Steps:
 1. Ensure that your python environment has pandas and pyproj installed
 If you are unsure of how to do this, look into documentation on using pip to install
 
-2. Ensure that the document with the Kentucky State Plane coordinates: 
-	a. is a CSV file
-	b. has the labels: XMIN	YMIN XMAX YMAX as the headers
-	c. is in the same folder as your transformer.py file
-	d. is named 'Jefferson_State_Zones.csv'
-		- alternatively you can change the path name in the transformer python file to your appropriate file names
+2. Ensure that you can access the following link:
+https://www.arcgis.com/apps/mapviewer/index.html?url=https://services1.arcgis.com/79kfd2K6fskCAkyg/ArcGIS/rest/services/Jefferson_County_Grid/FeatureServer/0&source=sd
+If you can not access this, please contact someone from the arcGIS team to make this information public
 		
-3. Now, go ahead and run the transformer function. If everything goes smoothly, you should see the words:
-"Transformed CSV saved to coordinates.csv" on the screen and in the file, you should see the new coordinates.csv file
+3. Delete the existing coordinates.csv file
 
-4. Replace the old coordinates.csv file with the new one 
+4. Now, go ahead and run the transformer function. If everything goes smoothly, you should see the words:
+"Transformed CSV saved to" followed by the same path where your run_results.py is 
+Please check that folder for the new coordinates.csv file
 
 Debugging:
 
-1. If you see an error mention: [Errno 2] No such file or directory: 'C:...\\Jefferson_State_Zones.csv'
-Please make sure that you file is appropriately named and follows all of the guidelines in Step 2
+1. If you see an error mention: No data available for transformation or "Failed to load ArcGIS data
+Please make sure that the link in the transformer function points to the correct location. If the grid has been moved to a different address, this link should be updated in the transformer.py and in this documentation
 
 2. If you see any errors regarding permission: Try running your application (Visual Studio, terminal, etc) in admin mode.
 Also delete any old files in the current folder that are unrelated or not necessary. We should only need the transformer.py
-and the Jefferson_State_Zones.csv (the docs can stay as well)
+file to generate this
 
-3. If you don't think that the code is properly picking up the new values, please ensure that the file has been properly
-replaced and then try rebuilding your project/solution. In Visual Studio, this is done by right project at the top of the
+3. If you don't think that the code is properly picking up the new values, please ensure that the coordinates.csv file has been properly
+replaced and then try rebuilding your project/solution. In Visual Studio, this is done by right clicking the project at the top of the
 solution explorer, and then clicking rebuild 
 
