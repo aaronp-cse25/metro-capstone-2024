@@ -9,32 +9,26 @@ from datetime import datetime
 from fuzzywuzzy import fuzz, process
 
 # Configure pandas
-pd.set_option('display.max_columns', None)  # Show all columns
-pd.set_option('display.max_rows', None)     # Show all rows
-pd.set_option('display.max_colwidth', None) # Show full column width for long text
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_colwidth', None)
 
 # Configure logging
 logging.basicConfig(
     filename=os.path.join('results', 'log.txt'),
-    level=logging.INFO, 
+    level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
-# Function to preprocess addresses by keeping building number, street name, and ZIP code
 def preprocess_address(address):
-    """
-    Preprocess the address to keep only building number, street name, and ZIP code.
-    """
-    # Remove city and state; extract ZIP code
     match = re.search(r'(.*?),\s*LOUISVILLE,?\s*KY\s*(\d{5}(-\d{4})?)', address, flags=re.IGNORECASE)
     if match:
         street = match.group(1).strip()
         zip_code = match.group(2).strip()
-        return f"{street} {zip_code}"  # Return as "street zip"
-    return address  # Return the original if it doesn't match
+        return f"{street} {zip_code}"
+    return address
 
-# Function to read the queries and API key from the YAML file
 def load_config_from_yaml(file_path):
     try:
         with open(file_path, 'r') as file:
@@ -47,7 +41,6 @@ def load_config_from_yaml(file_path):
         logging.error(f"Failed to load config from YAML: {e}")
         raise
 
-# Use pandas to read coordinates from the CSV file
 def load_coordinates_from_csv(file_path):
     try:
         coordinates_df = pd.read_csv(file_path)
@@ -57,16 +50,14 @@ def load_coordinates_from_csv(file_path):
         logging.error(f"Failed to load coordinates from CSV: {e}")
         raise
 
-# Function to get tobacco shops using Google Places API
 def get_tobacco_shops(api_key, rectangles, queries_df):
     url = "https://places.googleapis.com/v1/places:searchText"
-    
-    results_list = []  # Initialize a list to collect results
+    results_list = []
     totals = []
 
     for rect_index, rectangle in rectangles.iterrows():
         inside_count = 0
-        unique_place_ids = set()
+        unique_places = {}
 
         for _, row in queries_df.iterrows():
             query = row['keyword']
@@ -95,14 +86,11 @@ def get_tobacco_shops(api_key, rectangles, queries_df):
 
             try:
                 response = requests.post(url, json=payload, headers=headers)
-                response.raise_for_status()  # Raise HTTPError for bad responses
+                response.raise_for_status()
                 data = response.json()
-
-                places = data.get('places', [])  # Retrieve places
-                results_count = len(places)  # Get the number of results returned
+                places = data.get('places', [])
                 
-                # Log a single message with box number and results count
-                logging.info(f"Box {rect_index + 1}: Retrieved {results_count} results for query '{query}'")
+                logging.info(f"Box {rect_index + 1}: Retrieved {len(places)} results for query '{query}'")
 
                 for place in places:
                     place_id = place.get('id')
@@ -111,21 +99,21 @@ def get_tobacco_shops(api_key, rectangles, queries_df):
                     location = place.get('location', {})
                     latitude = location.get('latitude', 'No lat available')
                     longitude = location.get('longitude', 'No lon available')
-                    if place_id and place_id not in unique_place_ids:
-                        unique_place_ids.add(place_id)
-                        inside_count += 1
-                        
-                        # Collect the result in a list
-                        results_list.append({
-                            'Box': rect_index + 1,
-                            'Keyword': query,
-                            'Place Name': display_name,
-                            'Address': formatted_address,
-                            'Place ID': place_id,  # Include Place ID in the results
-                            'Latitude': latitude,
-                            'Longitude': longitude
 
-                        })
+                    if place_id:
+                        if place_id not in unique_places:
+                            unique_places[place_id] = {
+                                'Box': rect_index + 1,
+                                'Place Name': display_name,
+                                'Address': formatted_address,
+                                'Place ID': place_id,
+                                'Latitude': latitude,
+                                'Longitude': longitude,
+                                'Keywords': [query]
+                            }
+                            inside_count += 1
+                        else:
+                            unique_places[place_id]['Keywords'].append(query)
 
             except requests.exceptions.RequestException as e:
                 logging.error(f"Error making API request for query '{query}' in Box {rect_index + 1}: {e}")
@@ -133,31 +121,26 @@ def get_tobacco_shops(api_key, rectangles, queries_df):
                 logging.error(f"Unexpected error in Box {rect_index + 1}: {e}")
 
         totals.append(inside_count)
+        results_list.extend(unique_places.values())
 
-    # Convert the results list to a DataFrame at the end
     results_df = pd.DataFrame(results_list)
     
-    # Capitalize the 'Address' field
     if not results_df.empty:
-        results_df['Address'] = results_df['Address'].str.upper()  # Capitalize address
-    
+        results_df['Address'] = results_df['Address'].str.upper()
+        results_df['Keywords'] = results_df['Keywords'].apply(lambda x: ', '.join(x))
+
     return results_df, totals
 
-# Function to filter results to include only Louisville, KY
 def filter_louisville_results(results_df):
     try:
         logging.info(f"Starting filtering results for Louisville. Total records before filtering: {len(results_df)}")
-        
-        # Filter to include only addresses containing 'LOUISVILLE, KY'
         filtered_df = results_df[results_df['Address'].str.contains('LOUISVILLE, KY', na=False)]
-        
         logging.info(f"Successfully filtered for Louisville results. Remaining records: {len(filtered_df)}")
         return filtered_df
     except Exception as e:
         logging.error(f"Error filtering results for Louisville addresses: {e}")
         raise
 
-# Step 2: Load ArcGIS data for fuzzy matching
 def load_arcgis_data():
     url = 'https://services1.arcgis.com/79kfd2K6fskCAkyg/arcgis/rest/services/tobacco_licenses/FeatureServer/0/query'
     params = {
@@ -170,13 +153,13 @@ def load_arcgis_data():
     try:
         logging.info("Start loading ArcGIS data")
         response = requests.get(url, params=params)
-        response.raise_for_status()  # Raise HTTPError for bad responses
+        response.raise_for_status()
         data = response.json()
 
         arcgis_results = [
             {
                 'Business_Name': feature['attributes'].get('Business_Name', 'No Name'),
-                'Address': feature['attributes']['Address'].strip().upper(),  # Capitalized for matching
+                'Address': feature['attributes']['Address'].strip().upper(),
                 'Latitude': feature['attributes']['Latitude'],
                 'Longitude': feature['attributes']['Longitude']
             }
@@ -191,44 +174,41 @@ def load_arcgis_data():
         logging.error(f"Failed to fetch ArcGIS data: {e}")
         raise
 
-# Step 3: Fuzzy matching process
 def perform_fuzzy_matching(google_df, arcgis_df):
     matched_results = []
-    unmatched_google_addresses = []  # Initialize a list to store unmatched addresses
+    unmatched_google_addresses = []
     
     try:
         logging.info("Start performing fuzzy matching")
         for idx, google_row in google_df.iterrows():
-            google_address = preprocess_address(google_row['Address'])  # Preprocess Google address
-            
-            # Find the best match using fuzzy matching
+            google_address = preprocess_address(google_row['Address'])
             best_match = process.extractOne(google_address, arcgis_df['Address'], scorer=fuzz.token_sort_ratio)
             
-            if best_match[1] >= 72:  # You can set a threshold for a match score
+            if best_match[1] >= 72:
                 matched_results.append({
                     'Google Place Name': google_row['Place Name'],
-                    'Google Address': google_row['Address'],  # Original Google Address for reference
+                    'Google Address': google_row['Address'],
                     'Google Place ID': google_row['Place ID'],
-                    'lat': google_row['Latitude'],
-                    'long': google_row['Longitude'],
+                    'Latitude': google_row['Latitude'],
+                    'Longitude': google_row['Longitude'],
                     'ArcGIS Best Match': best_match[0],
                     'Match Score': best_match[1],
-                    'Matched Street Name': best_match[0]  # Get the street name from ArcGIS
+                    'Keywords': google_row['Keywords']
                 })
             else:
-                # If no match, still append the closest match
                 unmatched_google_addresses.append({
                     'Google Place Name': google_row['Place Name'],
-                    'Google Address': google_row['Address'],  # Original Google Address for reference
+                    'Google Address': google_row['Address'],
                     'Google Place ID': google_row['Place ID'],
-                    'lat': google_row['Latitude'],
-                    'long': google_row['Longitude'],
+                    'Latitude': google_row['Latitude'],
+                    'Longitude': google_row['Longitude'],
                     'Closest ArcGIS Match': best_match[0],
-                    'Closest Match Score': best_match[1]
-                })  # Store unmatched row with closest match info
+                    'Closest Match Score': best_match[1],
+                    'Keywords': google_row['Keywords']
+                })
 
         matched_df = pd.DataFrame(matched_results)
-        unmatched_df = pd.DataFrame(unmatched_google_addresses)  # Create a DataFrame for unmatched addresses
+        unmatched_df = pd.DataFrame(unmatched_google_addresses)
         
         logging.info(f"Successfully performed fuzzy matching. Matched: {len(matched_df)}, Unmatched: {len(unmatched_df)}")
         return matched_df, unmatched_df
@@ -237,10 +217,8 @@ def perform_fuzzy_matching(google_df, arcgis_df):
         logging.error(f"Error during fuzzy matching: {e}")
         raise
 
-# Function to save results to CSV
 def save_results_to_csv(matched_df, unmatched_df):
     try:
-
         os.makedirs('results', exist_ok=True)
         matched_file_path = os.path.join('results', 'fuzzy_matched.csv')
         unmatched_file_path = os.path.join('results', 'unmatched_candidates.csv')
@@ -249,7 +227,8 @@ def save_results_to_csv(matched_df, unmatched_df):
         unmatched_df.to_csv(unmatched_file_path, index=False)
         
         logging.info(f"Fuzzy matched results saved to {matched_file_path}")
-        logging.info(f"Unmatched candidate results saved to {unmatched_file_path}")
+        logging.info(f"Unmatched results saved to {unmatched_file_path}")
+
     except Exception as e:
         logging.error(f"Failed to save results to CSV: {e}")
         raise
@@ -270,11 +249,9 @@ def main():
         matched_df, unmatched_df = perform_fuzzy_matching(louisville_results_df, arcgis_df)
         # Step 7: Save results to CSV files
         save_results_to_csv(matched_df, unmatched_df)
-        # Call function from another file with the dataframes
-
 
     except Exception as e:
-        logging.error(f"An error occurred in main: {e}")
+        logging.error(f"An error occurred in the main function: {e}")
 
 if __name__ == "__main__":
     main()
