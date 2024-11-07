@@ -23,11 +23,15 @@ logging.basicConfig(
 
 # Function to preprocess addresses by keeping building number, street name, and ZIP code
 def preprocess_address(address):
+<<<<<<< Updated upstream
     """
     Preprocess the address to keep only building number, street name, and ZIP code.
     """
     # Remove city and state; extract ZIP code
     match = re.search(r'(.*?),\s*LOUISVILLE,?\s*KY\s*(\d{5}(-\d{4})?)', address, flags=re.IGNORECASE)
+=======
+    match = re.search(r'(.*?),\s*[A-Z\s]+,\s*KY\s*(\d{5}(-\d{4})?)', address, flags=re.IGNORECASE)
+>>>>>>> Stashed changes
     if match:
         street = match.group(1).strip()
         zip_code = match.group(2).strip()
@@ -145,17 +149,23 @@ def get_tobacco_shops(api_key, rectangles, queries_df):
 
     return results_df, totals
 
-def filter_louisville_results(results_df):
+def filter_kentucky_results(results_df):
     try:
+<<<<<<< Updated upstream
         logging.info(f"Starting filtering results for Louisville. Total records before filtering: {len(results_df)}")
                 
         # Filter to include only addresses containing 'LOUISVILLE, KY'
         filtered_df = results_df[results_df['Address'].str.contains('LOUISVILLE, KY', na=False)]
 
         logging.info(f"Successfully filtered for Louisville results. Remaining records: {len(filtered_df)}")
+=======
+        logging.info(f"Starting filtering results for Kentucky. Total records before filtering: {len(results_df)}")
+        filtered_df = results_df[results_df['Address'].str.contains('KY', na=False)]
+        logging.info(f"Successfully filtered for Kentucky results. Remaining records: {len(filtered_df)}")
+>>>>>>> Stashed changes
         return filtered_df
     except Exception as e:
-        logging.error(f"Error filtering results for Louisville addresses: {e}")
+        logging.error(f"Error filtering results for Kentucky addresses: {e}")
         raise
 
 # Step 2: Load ArcGIS data for fuzzy matching
@@ -266,11 +276,11 @@ def main():
         # Step 3: Get tobacco shops from Google Places API
         results_df, totals = get_tobacco_shops(api_key, coordinates_df, queries_df)
         # Step 4: Filter results for Louisville, KY
-        louisville_results_df = filter_louisville_results(results_df)
+        kentucky_results_df = filter_kentucky_results(results_df)
         # Step 5: Load ArcGIS data for fuzzy matching
         arcgis_df = load_arcgis_data()
         # Step 6: Perform fuzzy matching
-        matched_df, unmatched_df = perform_fuzzy_matching(louisville_results_df, arcgis_df)
+        matched_df, unmatched_df = perform_fuzzy_matching(kentucky_results_df, arcgis_df)
         # Step 7: Save results to CSV files
         save_results_to_csv(matched_df, unmatched_df)
         # Call function from another file with the dataframes
