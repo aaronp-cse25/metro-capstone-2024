@@ -23,15 +23,14 @@ logging.basicConfig(
 
 # Function to preprocess addresses by keeping building number, street name, and ZIP code
 def preprocess_address(address):
-<<<<<<< Updated upstream
+
     """
     Preprocess the address to keep only building number, street name, and ZIP code.
     """
     # Remove city and state; extract ZIP code
-    match = re.search(r'(.*?),\s*LOUISVILLE,?\s*KY\s*(\d{5}(-\d{4})?)', address, flags=re.IGNORECASE)
-=======
+
     match = re.search(r'(.*?),\s*[A-Z\s]+,\s*KY\s*(\d{5}(-\d{4})?)', address, flags=re.IGNORECASE)
->>>>>>> Stashed changes
+
     if match:
         street = match.group(1).strip()
         zip_code = match.group(2).strip()
@@ -151,18 +150,11 @@ def get_tobacco_shops(api_key, rectangles, queries_df):
 
 def filter_kentucky_results(results_df):
     try:
-<<<<<<< Updated upstream
-        logging.info(f"Starting filtering results for Louisville. Total records before filtering: {len(results_df)}")
-                
-        # Filter to include only addresses containing 'LOUISVILLE, KY'
-        filtered_df = results_df[results_df['Address'].str.contains('LOUISVILLE, KY', na=False)]
 
-        logging.info(f"Successfully filtered for Louisville results. Remaining records: {len(filtered_df)}")
-=======
         logging.info(f"Starting filtering results for Kentucky. Total records before filtering: {len(results_df)}")
         filtered_df = results_df[results_df['Address'].str.contains('KY', na=False)]
         logging.info(f"Successfully filtered for Kentucky results. Remaining records: {len(filtered_df)}")
->>>>>>> Stashed changes
+
         return filtered_df
     except Exception as e:
         logging.error(f"Error filtering results for Kentucky addresses: {e}")

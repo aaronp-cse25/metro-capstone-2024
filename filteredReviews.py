@@ -21,7 +21,7 @@ def load_config_from_yaml(file_path):
 # Function to load place IDs, Names, and Addresses from CSV
 def load_place_ids(file_name):
     try:
-        df = pd.read_csv(file_name, usecols=['Google Place ID', 'Google Place Name', 'Google Address', 'Latitude', 'Longitude', 'Closest ArcGIS Match', 'Closest Match Score', 'Keywords'])
+        df = pd.read_csv(file_name, usecols=['Google Place ID', 'Google Place Name', 'Google Address', 'lat', 'long', 'Closest ArcGIS Match', 'Closest Match Score', 'Keywords'])
         return df
     except Exception as e:
         logging.error(f"Error reading {file_name}: {e}")
@@ -69,8 +69,8 @@ def fetch_and_store_reviews(file_name, credentials, keywords):
             'Place ID': place_id,
             'Place Name': name,
             'Address': row['Google Address'],
-            'Latitude': row["Latitude"],
-            'Longitude': row["Longitude"],
+            'Latitude': row["lat"],
+            'Longitude': row["long"],
             'Closest ArcGIS Match': row['Closest ArcGIS Match'],
             'Closest Match Score': row['Closest Match Score'],
             'Keywords': row['Keywords']
